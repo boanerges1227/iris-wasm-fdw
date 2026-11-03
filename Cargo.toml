@@ -1,0 +1,29 @@
+[package]
+name = "iris_fdw"
+version = "0.1.0"
+edition = "2021"
+description = "Query InterSystems IRIS from Supabase/Postgres through a WebAssembly foreign data wrapper."
+license = "MIT"
+readme = "README.md"
+
+[lib]
+crate-type = ["cdylib"]
+
+[profile.release]
+strip = "debuginfo"
+lto = true
+
+[dependencies]
+wit-bindgen-rt = "0.26.0"
+serde_json = { version = "1.0", features = ["arbitrary_precision"] }
+base64 = "0.22"
+chrono = { version = "0.4.45", default-features = false, features = ["std"] }
+
+[package.metadata.component]
+package = "intersystems:iris-fdw"
+
+[package.metadata.component.target]
+path = "wit"
+
+[package.metadata.component.target.dependencies]
+"supabase:wrappers" = { path = "./supabase-wrappers-wit" }

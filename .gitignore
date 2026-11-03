@@ -1,0 +1,24 @@
+# Local tests, development notes and work logs (never upload these)
+/.local/
+/WORKLOG.md
+
+# Rust build output and generated WIT bindings
+/target/
+/src/bindings.rs
+/.cargo/
+
+# Private connection settings and credentials
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.p12
+
+# Editor and operating-system files
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db

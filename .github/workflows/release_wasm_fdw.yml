@@ -1,0 +1,42 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    uses: ./.github/workflows/ci.yml
+
+  release:
+    needs: verify
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: iris-fdw-wasm
+      - name: Calculate checksum and render IRIS usage
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          sha256sum iris_fdw.wasm > checksum.txt
+          export CHECKSUM="$(cut -d ' ' -f1 checksum.txt)"
+          export PACKAGE_VERSION="${RELEASE_TAG#v}"
+          envsubst < examples/release.sql.in > README.txt
+      - name: Publish the artifact built by CI
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          make_latest: true
+          files: |
+            README.txt
+            checksum.txt
+            iris_fdw.wasm
+
