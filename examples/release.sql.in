@@ -12,6 +12,6 @@ CREATE SERVER iris_server FOREIGN DATA WRAPPER wasm_wrapper OPTIONS (
   namespace 'USER', username 'YOUR_READ_ONLY_USER', password 'YOUR_PASSWORD'
 );
 CREATE FOREIGN TABLE iris_people (name text)
-  SERVER iris_server OPTIONS (query 'SELECT Name AS name FROM Sample.Person');
+  SERVER iris_server OPTIONS (query 'SELECT TOP 100 Name AS name FROM Sample.Person');
 -- Replace Sample.Person with your actual IRIS source table.
 SELECT * FROM iris_people;

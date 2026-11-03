@@ -27,7 +27,11 @@ Postgres 外部表 → Supabase Wrappers → Wasm FDW → IRIS Atelier API
 本地已验证 IRIS 2026.2、PostgreSQL 17、Wrappers 0.6.1；其他版本需要单独验证兼容性。
 上述验证使用本地容器，尚未在 Supabase 托管云项目中验证。
 
+使用合成数据逐步复现隔离 Docker 查询及预期结果，请参阅[本地复现指南（英文）](docs/reproduce.md)。
+
 ## 构建
+
+[v0.1.0 发布页](https://github.com/boanerges1227/iris-wasm-fdw/releases/tag/v0.1.0)提供 Wasm 组件及 SHA256 校验和，也可以从源码构建：
 
 克隆或下载项目后，在根目录执行：
 
@@ -119,6 +123,7 @@ API 地址以 Atelier 版本路径结尾，组件会追加 `/<namespace>/action/
 ```text
 .github/workflows/       公开构建、静态检查及发布工作流
 examples/               配置 SQL 和发布模板
+docs/                   本地复现指南
 scripts/                工具链初始化及公开检查入口
 src/                    FDW 实现与类型转换
 supabase-wrappers-wit/   宿主接口定义
@@ -126,7 +131,7 @@ wit/                    组件接口
 .local/                 本地测试、过程文档及工作日志（Git 排除）
 ```
 
-执行 `bash scripts/check.sh` 完成构建、格式及 Clippy 检查。项目中的 CI 工作流配置为执行这些检查并上传构建产物；发布工作流配置为对匹配版本的标签使用该产物并计算校验和。这些工作流尚未在远程仓库验证。
+执行 `bash scripts/check.sh` 完成构建、格式及 Clippy 检查。项目中的 CI 工作流构建并上传产物；发布工作流对匹配版本的标签使用该产物并计算校验和。
 
 ## 许可证
 

@@ -27,7 +27,11 @@ The current implementation is intended for small-scale trials and read queries w
 Validated locally with IRIS 2026.2, PostgreSQL 17 and Wrappers 0.6.1. Other versions need their own compatibility checks.
 This validation used local containers, not a hosted Supabase project.
 
+For a step-by-step isolated Docker walkthrough with synthetic data and expected results, see [Reproduce the IRIS query](docs/reproduce.md).
+
 ## Build
+
+The [v0.1.0 release](https://github.com/boanerges1227/iris-wasm-fdw/releases/tag/v0.1.0) provides the Wasm component and its SHA256 checksum. You can also build from source:
 
 Clone or download this project, then run from its root:
 
@@ -119,6 +123,7 @@ The wrapper does not implement INSERT, UPDATE, DELETE or host-driven rescans. In
 ```text
 .github/workflows/       Public build/lint and release workflows
 examples/               SQL setup and release templates
+docs/                   Reproducible local walkthrough
 scripts/                Toolchain setup and public validation
 src/                    FDW implementation and type conversion
 supabase-wrappers-wit/   Host interface definitions
@@ -126,7 +131,7 @@ wit/                    Component world
 .local/                 Local tests, development notes and work logs (Git-ignored)
 ```
 
-Run `bash scripts/check.sh` to build, check formatting and run Clippy. The included CI workflow is configured to run these checks and upload a build artifact. The release workflow is configured to use that artifact and calculate its checksum for matching version tags; these workflows have not been verified on a remote repository.
+Run `bash scripts/check.sh` to build, check formatting and run Clippy. The included CI workflow builds and uploads an artifact; the release workflow uses that artifact and calculates its checksum for matching version tags.
 
 ## License
 
